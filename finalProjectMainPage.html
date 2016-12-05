@@ -1,0 +1,122 @@
+<?php
+// Start the session
+session_start();
+ if($_SESSION["currentUserID"] = null)
+	{
+		$_SESSION["currentUserID"] = 1;
+	} 
+
+ //when you create a user it'll make it's own user ID, if you're not logged in it'll be user ID = 1. 
+ 
+if( )
+?>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	
+	<style>
+		.galleria{ width: 700px; height: 400px; background: #111; margin-left: auto;
+    margin-right: auto }
+	</style>
+	<style>
+		<!-- #hoveree {
+		
+		-webkit-transition: width 2s linear 1s; /* For Safari 3.1 to 6.0 */
+		transition: width 2s linear 1s;
+		} -->
+
+		#hoveree:hover {
+		background: red;
+			height: 300px;
+		}
+	</style>
+	
+    <title>Final Main Page</title>
+	<!-- Script sources for jQuery and Galleria, a plugin i'm using. -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+	<script src="http://studentprojects.sis.pitt.edu/fall2016/kgc7/jscript/galleria/galleria-1.4.7.min.js"></script>
+	<script>
+		(function() { 
+			//alert("inside galeria scrip");
+			Galleria.loadTheme('http://studentprojects.sis.pitt.edu/fall2016/kgc7/jscript/galleria/galleria.classic.min.js');
+			//Galleria.run('http://studentprojects.sis.pitt.edu/fall2016/kgc7/jscript/galleria/');
+			Galleria.run('.galleria');
+
+		}());
+	</script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<!-- 	<script>
+		$(document).ready(function(){
+		//alert("scripting");
+		//var userID =  "<?php echo ($_SESSION['currentUserID']); ?>"	; 
+			
+		var userID = "<?php echo json_encode($_SESSION['currentUserID']); ?>";
+		alert(userID);	
+		});
+	
+	</script> -->
+	
+  </head>
+<body>	
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brandmane for Chocolate Covered Goodness -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Chocolate Covered Goodness!</a>
+    </div>
+
+    <!-- Navbar came from https://getbootstrap.com/components/#navbar -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="finalProjectMainPage.html">Main page <span class="sr-only">(current)</span></a></li>
+        <li id = "hoveree"><a href="finalProjectProductPage.php">Premade Products, hover over for a transition effect from css</a></li>
+		<li><a href="customCreation.html">Custom Creation</a></li>
+		<li><a href="eventCreation.html">Event Recomendations</a></li>
+      </ul>
+      <form class="navbar-form navbar-left">
+        
+      </form>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="finalSignIn.php">Sign in</a></li>
+		<li><a href="cartPageFinal.php">View Cart</a></li>		
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+ <div class="jumbotron" >
+    <h1 class="text-center">Welcome to chocolate covered goodness!</h1> 
+    <p class="text-center"> At CCG we make the very best goodiebags filled with your favorite chocolate covered candy! </p>
+</div>
+
+<div class = "center-block">
+	<div class="galleria">
+		<img src="pics\regular blueberries.jpg">
+		<img src="pics\regular cherries.jpg">
+		<img src="pics\regular strawberries.jpg">
+	</div>
+</div>
+
+<!-- gonna need links to the login, links to the premade, links to custom, link to event. -->
+<div class="center-block">
+<p class="text-center"> Wanna browse our premade chocolate selection?  </p>
+<a href="finalProjectProductPage.php" class="btn btn-primary btn-block">Premade Selection</a> <br>
+
+<p class="text-center"> Want your own customized bag of chocolate? </p> 
+<a href="customCreation.html" class="btn btn-info btn-block">Create your own!</a> <br>
+
+<p class="text-center"> Hosting an event?  Click here to check out our event recomendation and we'll generate a selection of goodiebags customized for you! </p>
+<a href="eventCreation.html" class="btn btn-success btn-block" >Event Planing<a> <br>
+</div>
+	
+	
+	
+   
+    
+ 
+</body>   
+</html>

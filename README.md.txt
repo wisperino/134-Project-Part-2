@@ -1,0 +1,2 @@
+I am still working on some javascript PHP things for the 3 add pages.
+I will have everything completed and in nice sorted order with links to the text files by wednesday and they will be available here: http://studentprojects.sis.pitt.edu/fall2016/kgc7/homework.html

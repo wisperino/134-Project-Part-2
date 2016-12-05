@@ -1,0 +1,110 @@
+<?php
+// Start the session
+session_start();
+?>
+<!DOCTYPE HTML>
+<HTML lang="en">
+  <HEAD>
+    <TITLE>Event Chocolate</TITLE>
+	<!-- Here I'm using bootstrap for basic css to look nice -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<!-- using jQuery to simplify javascript things -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script>
+		//var testVar = 1;
+		var milkchoc = false;
+		var darkchoc = false;
+		var whitechoc = false;
+		var strawberrybase = false;
+		var cherrybase = false;
+		var blueberrybase = false;
+		var bugs = false;
+	</script>
+	<!-- External Javascript file. -->
+	<script  src="http://studentprojects.sis.pitt.edu/fall2016/kgc7/eventCreationJavascript.js" ></script>
+	
+	
+	
+  </HEAD>
+</BODY>
+<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+		<!-- Brandmane for Chocolate Covered Goodness -->
+		<div class="navbar-header">
+		  <a class="navbar-brand" href="#">Chocolate Covered Goodness!</a>
+		</div>
+
+		<!-- Navbar came from https://getbootstrap.com/components/#navbar -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		  <ul class="nav navbar-nav">
+			<li class="active"><a href="finalProjectMainPage.html">Main page <span class="sr-only">(current)</span></a></li>
+			<li><a href="finalProjectProductPage.php">Premade Products</a></li>
+			<li><a href="customCreation.html">Custom Creation</a></li>
+			<li><a href="eventCreation.html">Event Recomendations</a></li>
+		  </ul>
+		  <form class="navbar-form navbar-left">
+			
+		  </form>
+		  <ul class="nav navbar-nav navbar-right">			
+			<li><a href="finalSignIn.php">Sign in</a></li>
+			<li><a href="cartPageFinal.php">View Cart</a></li>		
+		  </ul>
+		</div><!-- /.navbar-collapse -->
+	  </div><!-- /.container-fluid -->
+</nav>
+<h1> Welcome to the event recomendation page! </h1> 
+
+<div class = "ayyform">
+ 
+	<form id = "generateChoc" action="generateChoclate.php" method="post">
+
+		What type of event is it? <br>
+		
+		<input type="radio" name="event" value="wedding" required> Wedding<br>
+		<input type="radio" name="event" value="birthday"> Birthday <br>
+		<input type="radio" name="event" value="confrence"> Confrence <br>
+		<input type="radio" name="event" value="hollidayParty">  Holliday Party <br>
+
+		Would you like to try some of our bug chocolate? 
+		<input type="radio" name="bugs" value="yes"> Yes 
+		<input type="radio" name="bugs" value="no" required > No <br>
+		
+		How big would you like each bag to be? 
+		<input type="radio" name="bagSize" value="small" required> small 
+		<input type="radio" name="bagSize" value="medium"> medium 
+		<input type="radio" name="bagSize" value="large"> large <br>
+		
+		How many people will be attending? (maximum  200.)
+		<input type="number" name="numPeople" min="1" max="200" required> <br>
+		
+		<!-- What is your budget for this event? 
+		<input type="number" name="budget" min="1" max=""> <br> -->
+		
+		What types of chocolate are you ok with having in your bags? Please select at least one. <br>  
+		<input type="checkbox" id = "milk" name="chocType" value="milk" checked> Milk <br>
+		<input type="checkbox" id = "white" name="chocType" value="white"> White <br>
+		<input type="checkbox" id = "dark" name="chocType" value="dark"> Dark <br>
+		
+		What kinds of fruits are you ok with having? Please select at least one. (Bags will be labeled with what they contain to consider those alergic.)<br>  
+		<input type="checkbox" id = "straw" name="base" value="strawberry" checked> Strawberry <br>
+		<input type="checkbox" id = "cherry" name="base" value="cherry"> Cherry <br>
+		<input type="checkbox" id = "blueberry" name="base" value="blueberry"> Blueberry <br>
+		
+		
+		
+		<input type="submit" id = "submit button" value="Submit"> <br>
+		<!-- <button name="submitbutton" id = "submit" type="submit" >Click me to add to cart!</button>
+ -->	</form>
+	
+	
+</div>
+<div class = "showComplete">
+
+</div>
+<a href="cartPageFinal.php" class="btn btn-default">Click here to go to your cart</a> 
+  
+</BODY>
+</HTML>
