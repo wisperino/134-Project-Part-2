@@ -17,6 +17,7 @@ session_start();
 <h1> This is the addToCartFinal page </h1> 
 	
     <?php 
+		//AddToCartFinal is called with ajax whenever I wanna add something to the cart.
 		$itemID = 0;
 		$itemName = $_POST["name"];
 		$chocType = $_POST["chocType"];

@@ -23,41 +23,285 @@ session_start();
 		var blueberrybase = false;
 		var bugs = false;
 	</script>
-	<!-- External Javascript file. -->
-	<script  src="http://studentprojects.sis.pitt.edu/fall2016/kgc7/eventCreationJavascript.js" ></script>
 	
+	<!-- 
+		This is an unused script that would have gotten info from whenever the user selected one of the checkboxes but I decided to read taht info from the submitted form data instead. 
+		I am including it here because it was painful for me to write and I like it please ignore. 
+	<script>
+	$(function(){
+	  $('input[type="checkbox"]').change(function(){
+		//var testVar = 1;
+		var id=$(this).attr('id');
+		var value=$(this).val();
+		if ($(this).prop('checked'))
+		{
+			//alert(testVar);
+			//alert('id:'+id+' value:'+value);
+			switch (id) 
+			{
+				case 'milk':
+					//alert("milk inside switch");
+					milkchoc = true;
+					break;
+				case 'white':
+					whitechoc = true;
+					break;
+				case 'dark':
+					darkchoc = true;
+					break;
+				case 'straw':
+					strawberrybase = true;
+					break;
+				case 'cherry':
+					cherrybase = true;
+					break;
+				case 'blueberry':
+					blueberrybase = true;				
+			} 
+		}
+	  });
+	  
+	});
+	</script> -->
+<script>
+	//this script is triggered whenever you submit the form.
+	$(document).ready(function() 
+	{
+		$("#generateChoc").submit(function(event) {
+		//dont go to the addToCartFinal.php page.
+		event.preventDefault();
+		//console.log( $( this ).serializeArray() );
+		
+		//Here I declade some of the basic values and 2 arrays that I need to make this work. 
+		var bugs;
+		bugs = false;
+		var price;
+		price = 0;
+		var choclist;
+		choclist = [];
+		var baselist;
+		baselist = [];
+		//pull the values from the form and store them in an array. 
+		var values = $(this).serializeArray();
+		var numChecked = values.length;
+		
+		//this function loops through the values array and calls the what kind is it function to determine the value it was. 
+		for(i = 3; i < numChecked; i++)
+		{
+			var itsthiskind = whatKindIsIt(values[i].value);
+			//alert("the value is " + values[i].value + " the returned value is " + itsthiskind);
+		} 
+		//console.log(choclist);
+		//if (values[3].value == "milk") alert("its a real boy mom");  
+		
+		function whatKindIsIt(value) {
+			switch (value) 
+			{
+				case 'milk':
+					choclist.push("milk");
+					return "milk";					
+					break;
+				case 'white':
+					choclist.push("white");
+					return "white";						
+					break;
+				case 'dark':
+					choclist.push("dark");
+					return "dark";					
+					break;
+				case 'strawberry':
+					baselist.push("strawberry");
+					return "strawberry";					
+					break;
+				case 'cherry':
+					baselist.push("cherry");
+					return "cherry";					
+					break;
+				case 'blueberry':
+					baselist.push("blueberry");	
+					return "blueberry";
+									
+			} 
+		} 
+		
 	
+		//pull the name of the event from the form
+		var eventName = values[0].value;
+		
+		//pull wheter they want bugs or not
+		if(values[1].value == "yes")
+		{
+			console.log("bugs = yes");
+			bugs = true;
+			baselist.push("bugs");
+		}else
+		{
+			bugs = false;
+		}
+		//pull the size of the bags and the number of people.
+		var bagSize = values[2].value;
+		var numPeople = values[3].value;
+		//var budget = values[3];
+		
+
+		
+		//do a function based on the choclist.length and baselist.length  
+		//value number of sets = choclist.length * baselist.length  
+		//value size of set =  numPeople / number of sets.
+		//for loop through size of set, each one 
+		//if num of set is 2 
+		
+		//I decided it would be simple to just create all the posisble combinations of chocolate and base foods and divide the amount by the number of people.  I assume they want a bag for each guest and 100% diversity in their bags.
+		//numOfSets are all the posisble combinations of chocolate and base foods 
+		//sizeOfSet is just the number of bags each of those combinations will have. 
+		var numOfSets = choclist.length * baselist.length;
+		var sizeOfSet =  Math.round(numPeople / numOfSets);
+		$("#valueeeeee").empty();
+		$("#valueeeeee").append("Chocolate Covered Goodness would recomend for your event " + numOfSets +" different sets of goodiebags listed here: </br>")
+		//loop through all the possible combinations of chocolate and bases, and throw them out into a div element so the customer can see.
+		//during this loop as I go through all the combinations I also note their price and total the price.
+		for(i = 0; i < choclist.length; i++)
+		{
+			//$("#valueeeeee").append("i is now: " + i + "<br>");
+			for(p = 0; p < baselist.length; p++)
+			{
+				//$("#valueeeeee").append("p is now: " + p + "<br>");
+				//made a quick function calcPrice to determine the price of a single bag, then multiplied that by the number of bags we're getting. 
+				var priceTemp1 = calcPrice(baselist[p],bagSize);
+				priceTemp1 = priceTemp1 * sizeOfSet;
+				
+				price = price + priceTemp1;
+				
+				$("#valueeeeee").append(sizeOfSet + " bags of " + baselist[p] + " covered with " + choclist[i] + " chocolate. " + "</br>"); 
+				//$("#valueeeeee").append( "priceTemp1 =  " + priceTemp1 + "<br>");				
+				
+			}
+		}
+		$("#valueeeeee").append("This would all cost: $" + price); 	
+		
+		//I only add the bags to the cart if the user selects the "add to cart button", and evecn then only after a confirm. 
+		//when I add to the cart I just loop through all the possible combinations again, calculate the price for each, then make an ajax call to the addtocart.php, simple. 
+		$("#submitEventButton").click(function(event) 
+		{
+			if( confirm('Are you sure you would like to add these to your cart?') ) 
+			{	
+				for(i = 0; i < choclist.length; i++)
+				{
+					//$("#valueeeeee").append("i is now: " + i + "<br>");
+					for(p = 0; p < baselist.length; p++)
+					{					
+						//$("#valueeeeee").append("p is now: " + p + "<br>");
+						var priceTemp = calcPrice(baselist[p],bagSize);
+							priceTemp = priceTemp * sizeOfSet;
+						$.ajax(
+						{
+							type: "POST",
+							url: 'http://studentprojects.sis.pitt.edu/fall2016/kgc7/addToCartFinal.php',   
+							data: { "name": eventName, "base": baselist[p], "chocType": choclist[i], "sizeOfBag": bagSize, "price": priceTemp, "numOrder": sizeOfSet },
+							success: function (result) {
+							//alert("Added to cart!");									
+							}
+						});
+						
+
+					}
+				}
+				alert("Added to cart!");
+			}
+		});
+		
+		
+    })
+});
 	
+	//quick function i'm using to get a random number that I didnt end up using but is still here cus its nice i guess man I'm tired.
+	//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+	/*function getRandomInt(min, max) {
+	  min = Math.ceil(min);
+	  max = Math.floor(max);
+	  return Math.floor(Math.random() * (max - min)) + min;
+	}*/
+	//calcualtes the price based on the base food and the size of the bag, chocolate is the same cost to produce ok its p cheap. 
+	function calcPrice(base, bagSize) 
+	{
+		var price1 = 0;
+		console.log("base line 211 = " + base);
+		console.log("bagSize line 212 = " + bagSize);
+		switch (base) {
+			case ("cherry"):
+				price1 = 3;
+				break;
+			case ("blueberry"):
+				price1 = 2;
+				break;
+			case ("strawberry"):
+				price1 = 4;
+				break;
+			case ("bugs"):
+				price1 = 1;
+		} 
+		switch (bagSize) {
+			case ("small"):				
+				break;
+			case ("medium"):
+				price1 = price1 *2;
+				break;
+			case ("large"):
+				price1 = price1*3;
+		}
+		
+		return price1;
+	}
+	
+	</script>
+	
+	<style>
+		body{
+			background-color:#7FDBFF;
+			}
+		.lead{
+			background: #7FDBFF;
+			color: #225149; 
+		}
+		.hoveree:hover {
+			background: #D050D0;
+		}	
+	</style>
   </HEAD>
 </BODY>
+<!-- same old navbar -->
 <nav class="navbar navbar-default">
-	  <div class="container-fluid">
-		<!-- Brandmane for Chocolate Covered Goodness -->
-		<div class="navbar-header">
-		  <a class="navbar-brand" href="#">Chocolate Covered Goodness!</a>
-		</div>
+  <div class="container-fluid">
+    <!-- Brandmane for Chocolate Covered Goodness -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Chocolate Covered Goodness!</a>
+    </div>
 
-		<!-- Navbar came from https://getbootstrap.com/components/#navbar -->
-		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-		  <ul class="nav navbar-nav">
-			<li class="active"><a href="finalProjectMainPage.html">Main page <span class="sr-only">(current)</span></a></li>
-			<li><a href="finalProjectProductPage.php">Premade Products</a></li>
-			<li><a href="customCreation.html">Custom Creation</a></li>
-			<li><a href="eventCreation.html">Event Recomendations</a></li>
-		  </ul>
-		  <form class="navbar-form navbar-left">
-			
-		  </form>
-		  <ul class="nav navbar-nav navbar-right">			
-			<li><a href="finalSignIn.php">Sign in</a></li>
-			<li><a href="cartPageFinal.php">View Cart</a></li>		
-		  </ul>
-		</div><!-- /.navbar-collapse -->
-	  </div><!-- /.container-fluid -->
+    <!-- Navbar came from https://getbootstrap.com/components/#navbar -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class = "hoveree"><a href="finalProjectMainPage.html">Main page </a></li>
+        <li class = "hoveree"><a href="finalProjectProductPage.html">Premade Products</a></li>
+		<li class = "hoveree"><a href="customCreation.html">Custom Creation</a></li>
+		<li class="active hoveree" ><a href="eventCreation.html">Event Recomendations<span class="sr-only">(current)</span></a></li>
+      </ul>
+      <form class="navbar-form navbar-left">
+        
+      </form>
+      <ul class="nav navbar-nav navbar-right">
+
+		<li> <div id="div1"><h2>Let jQuery AJAX Change This Text</h2></div> </li>
+		<script>
+			$("#div1").load("getSession.php");
+		</script>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
 </nav>
+<div class="text-center">
 <h1> Welcome to the event recomendation page! </h1> 
-
-<div class = "ayyform">
+<!-- Here is the form: -->
+<div class = "ayyform lead">
  
 	<form id = "generateChoc" action="generateChoclate.php" method="post">
 
@@ -95,16 +339,16 @@ session_start();
 		
 		
 		
-		<input type="submit" id = "submit button" value="Submit"> <br>
+		<input type="submit" id = "submit button" class="btn btn-primary btn-lg" value="Submit"> <br>
 		<!-- <button name="submitbutton" id = "submit" type="submit" >Click me to add to cart!</button>
  -->	</form>
-	
-	
-</div>
-<div class = "showComplete">
+	<div id = "valueeeeee">
 
+	</div>
+	  <button type="button" id= "submitEventButton" class="btn btn-success">Add to cart!</button>
+<!-- close ayyform --> </div>
 </div>
-<a href="cartPageFinal.php" class="btn btn-default">Click here to go to your cart</a> 
+
   
 </BODY>
 </HTML>

@@ -1,0 +1,160 @@
+<!DOCTYPE HTML>
+<HTML lang="en">
+  <HEAD>
+    <TITLE>Chocolate Covered Goodness</TITLE>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="finalProjectProductPage.css">
+	<style>
+		p{font-size: 50px;
+		line-height: 2;
+		}
+		.hoveree:hover {
+			
+			background: #D050D0;
+		}		
+		body{
+			background-color:#7FDBFF;
+		}
+	</style>
+	<!-- Using jQuery to make javascript, specifically AJAX easier. -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  </HEAD>
+</BODY>
+<!-- Here is the top navbar, using the css3 :hover selection i've givin it a slight transition when it's hovered over. -->
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brandmane for Chocolate Covered Goodness -->
+    <div class="navbar-header">
+      <a class="navbar-brand">Chocolate Covered Goodness!</a>
+    </div>
+
+    <!-- Navbar came from https://getbootstrap.com/components/#navbar -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class = "hoveree"><a href="finalProjectMainPage.html">Main page </a></li>
+        <li class="active hoveree"><a href="finalProjectProductPage.html">Premade Products<span class="sr-only">(current)</span></a></li>
+		<li class = "hoveree"><a href="customCreation.html">Custom Creation</a></li>
+		<li class = "hoveree"><a href="eventCreation.html">Event Recomendations</a></li>
+      </ul>
+      <form class="navbar-form navbar-left">
+        
+      </form>
+      <ul class="nav navbar-nav navbar-right">
+		<!-- For the top righthand side of the navbar i've made a "getSession.php" file that gets called, getSession loads the php session info and determins what to show here. -->
+		<li> <div id="div1"><h2>Let jQuery AJAX Change This Text</h2></div> </li>
+		<script>
+			$("#div1").load("getSession.php");
+		</script>		
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+<h1 class="text-center" > Welcome to the product page! Click the images to add them to your cart! </h1> 
+<!-- class is for bootstrap -->
+<div class="container-fluid">
+<!-- Here are all the selections, when their clicked the javascript on the page selects them by ID and then adds them to the cart. -->
+	<div class="row">
+	  <div class="col-sm-6">
+		<p class="text-center" class="lead"> Regular blueberries </p>
+		<img src="pics\regular blueberries.jpg"  class="center-block"  alt="Regular Chcolate Covered Blueberries" id= "rblue" > </a> </li>  <br>
+	  </div>
+	  <div class="col-sm-6">
+		<p class="text-center" class="lead"> Regular Cherries </p>
+		<img src="pics\regular cherries.jpg"   class="center-block" alt="Regular Chcolate Covered Cherries" id= "rcherry"> </a> </li> <br>
+	  </div>
+	</div>
+
+	<div class="row">
+	  <div class="col-sm-6">
+		<p class="text-center" class="lead"> Regular Strawberries </p>
+		<img src="pics\regular strawberries.jpg"  class="center-block"  alt="Regular Chcolate Covered Blueberries" id= "rstraw" > </a> </li>  <br>
+	  </div>
+	  <div class="col-sm-6">
+		<p class="text-center" class="lead"> White Blueberries </p>
+		<img src="pics\white blueberries.jpg"   class="center-block" alt="Regular Chcolate Covered Cherries" id= "wblue"> </a> </li> <br>
+	  </div>
+	</div>
+	<div class="row">
+	  <div class="col-sm-6">
+		<p class="text-center" class="lead"> White Cherries </p>
+		<img src="pics\white cherries.jpg"  class="center-block"  alt="Regular Chcolate Covered Blueberries" id= "wcherry" > </a> </li>  <br>
+	  </div>
+	  <div class="col-sm-6">
+		<p class="text-center" class="lead"> White Strawberries </p>
+		<img src="pics\white strawberries.jpg"   class="center-block" alt="Regular Chcolate Covered Cherries" id= "wstraw"> </a> </li> <br>
+	  </div>
+	</div>
+
+</div>
+<!-- Here are the javascript files, using jQuery i can select by ID and run a quick function when that ID element (the picture) is clicked, the function is just an ajax query to the addToCartFInal.php page that adds it to the cart-->
+	<script>
+		$( "#rblue" ).click(function() {
+			$.ajax(
+			{
+				type: "POST",
+				url: 'http://studentprojects.sis.pitt.edu/fall2016/kgc7/addToCartFinal.php',   
+				data: { "name": "Milk Blueberries", "base": "blueberry", "chocType": "milk", "sizeOfBag": "medium", "price": 8, "numOrder": 1 },
+				success: function (result) {
+				alert("Added to cart!");									
+			}
+			});
+
+		});
+		$( "#wblue" ).click(function() {
+		  $.ajax(
+			{
+				type: "POST",
+				url: 'http://studentprojects.sis.pitt.edu/fall2016/kgc7/addToCartFinal.php',   
+				data: { "name": "White Blueberries", "base": "blueberry", "chocType": "white", "sizeOfBag": "medium", "price": 8, "numOrder": 1 },
+				success: function (result) {
+				alert("Added to cart!");									
+			}
+			});
+		});
+		$( "#rstraw" ).click(function() {
+		  $.ajax(
+			{
+				type: "POST",
+				url: 'http://studentprojects.sis.pitt.edu/fall2016/kgc7/addToCartFinal.php',   
+				data: { "name": "Milk Strawberries", "base": "strawberry", "chocType": "milk", "sizeOfBag": "medium", "price": 8, "numOrder": 1 },
+				success: function (result) {
+				alert("Added to cart!");									
+			}
+			});
+		});
+		$( "#wstraw" ).click(function() {
+		  $.ajax(
+			{
+				type: "POST",
+				url: 'http://studentprojects.sis.pitt.edu/fall2016/kgc7/addToCartFinal.php',   
+				data: { "name": "White Strawberries", "base": "strawberry", "chocType": "white", "sizeOfBag": "medium", "price": 8, "numOrder": 1 },
+				success: function (result) {
+				alert("Added to cart!");									
+			}
+			});
+		});
+		$( "#rcherry" ).click(function() {
+		  $.ajax(
+			{
+				type: "POST",
+				url: 'http://studentprojects.sis.pitt.edu/fall2016/kgc7/addToCartFinal.php',   
+				data: { "name": "Milk Cherry", "base": "cherry", "chocType": "milk", "sizeOfBag": "medium", "price": 8, "numOrder": 1 },
+				success: function (result) {
+				alert("Added to cart!");									
+			}
+			});
+		});
+		$( "#wcherry" ).click(function() {
+		  $.ajax(
+			{
+				type: "POST",
+				url: 'http://studentprojects.sis.pitt.edu/fall2016/kgc7/addToCartFinal.php',   
+				data: { "name": "White Cherries", "base": "cherry", "chocType": "white", "sizeOfBag": "medium", "price": 8, "numOrder": 1 },
+				success: function (result) {
+				alert("Added to cart!");									
+			}
+			});
+		});
+	</script>
+</BODY>
+</HTML>

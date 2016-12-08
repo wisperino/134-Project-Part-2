@@ -5,36 +5,23 @@ session_start();
 <!DOCTYPE html>
 <html lang="en">
   <head>
-  <style>
-	@keyframes carMove {
-	/*0%: height:100px;
-	50%: height: 200px;   #810043
-	100% height:400px;*/
-	from{
-		margin-left:0px;
-		width:100px;
-	}
-	to {
-		margin-left: 500px;
-		width: 100px; 
-	}
-	}
-	img.cart{
-		width:  100px;
-		height: 100px;
-		animation-name: carMove;
-		animation-duration: 2s;
-		animation-delay: 1s;
-		animation-direction: alternate;
-		animation-iteration-count: infinite;
-	}
-  </style>
   <!-- Here I'm using bootstrap for basic css to look nice -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
+	<style>
+		body{
+			background-color:#7FDBFF;
+			}
+		.hoveree:hover {
+			background: #D050D0;
+		}
+		.container{
+			background: #50D050;
+		}		
+	</style>
     <title>cartPage.php</title>
 	<nav class="navbar navbar-default">
 	  <div class="container-fluid">
@@ -46,31 +33,32 @@ session_start();
 		<!-- Navbar came from https://getbootstrap.com/components/#navbar -->
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		  <ul class="nav navbar-nav">
-			<li class="active"><a href="finalProjectMainPage.html">Main page <span class="sr-only">(current)</span></a></li>
-			<li><a href="finalProjectProductPage.php">Premade Products</a></li>
-			<li><a href="customCreation.html">Custom Creation</a></li>
-			<li><a href="eventCreation.html">Event Recomendations</a></li>
+			<li class = "hoveree"><a href="finalProjectMainPage.html">Main page </a></li>
+			<li class = "hoveree"><a href="finalProjectProductPage.html">Premade Products</a></li>
+			<li class = "hoveree"><a href="customCreation.html">Custom Creation</a></li>
+			<li class = "hoveree"><a href="eventCreation.html">Event Recomendations</a></li>
 		  </ul>
 		  <form class="navbar-form navbar-left">
 			
 		  </form>
 		  <ul class="nav navbar-nav navbar-right">
-			<li><a href="finalProjectCreateAccount.php">Create account</a></li>
-			<li><a href="finalSignIn.php">Sign in</a></li>
-			<li><a href="cartPageFinal.php">View Cart</a></li>		
+			<li> <div id="div1"><h2>Let jQuery AJAX Change This Text</h2></div> </li>
+			<script>
+				$("#div1").load("getSession.php");
+			</script>	
 		  </ul>
 		</div><!-- /.navbar-collapse -->
 	  </div><!-- /.container-fluid -->
 	</nav>
 	
-	
   </head>
 <body>
     
 <h1> This is the FINAL Cart page </h1> 
-	<img class = "cart" src="pics\cart icon.png" alt="Cool moving icon">
+	
     <?php 
 		//**here I pull the data from the post method. 
+		//echo out the javascript code to clear the cart. 
 		echo "
 			<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
             <script>
@@ -92,11 +80,7 @@ session_start();
 			});
 			</script>
         ";
-		// echo 'price = ',  $price;
-		// echo '<br>';
-		// echo 'ID = ',  $itemID;
-		// echo '<br>';
-		//**connect to the database
+		
 		$host = "localhost"; 		
 		$user = "kgc7";
 		$password = "3873115";
@@ -164,9 +148,8 @@ session_start();
 					</div>';
 		
 		
-		//**go back to previous pages
-		
 	?>
+	<!-- Button to clear the cart -->
 	<button name="clearcartbutton" class="btn btn-primary" id = "clearCart"> Clear cart button </button>
    
     

@@ -1,0 +1,188 @@
+<?php
+// Start the session
+session_start();
+?>
+<!DOCTYPE HTML>
+<HTML lang="en">
+  <HEAD>
+    <TITLE>CustomCreationPage</TITLE>
+	<!-- Here I'm using bootstrap for basic css to look nice -->
+	<style>
+	body{
+		background-color:#7FDBFF;
+		}
+	.hoveree:hover {
+		
+		background: #D050D0;
+	}	
+	.ayyform{
+		background: #7FDBFF;
+		color: #225149; 
+	}
+	.lead{
+		background: #7FDBFF;
+		color: #225149; 
+	}
+	.jumbotron{
+		background: #7FDBFF;
+		color: #225149; 
+	}
+	input{
+		
+		font-size: 64; 
+		color: #225149; 
+	}
+	</style>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<!-- using jQuery to simplify javascript things -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script>
+	//this makes the script run whenever the doc loads
+	$(document).ready(function() {
+	//whenever the chocForm is submitted this event happens
+    $("#chocForm").submit(function(event) 
+	{
+		//console.log( $( this ).serializeArray() );
+		  //here I save the POST values submitted as an array in javascript
+		  var values = $(this).serializeArray();
+		  
+		  var name = values[0].value; 
+		  var base = values[1].value;
+		  var chocType = values[2].value; 	
+		  var bagSize = values[3].value;
+		  var price = 0;
+		  
+		  //simple switch statmenets that determins which base and bagsize were selected
+		  switch (base) {
+			case ("cherries"):
+				//alert('base case is cherries');
+				price = 3;
+				break;
+			case ("blueberries"):
+				price = 2;
+				break;
+			case ("strawberries"):
+				price = 4;
+				break;
+			case ("bugs"):
+				price = 1;
+		} 
+		switch (bagSize) {
+			case ("small"):
+				//alert('base case is cherries');
+				break;
+			case ("medium"):
+				price = price *2;
+				break;
+			case ("large"):
+				price = price*3;
+		}
+		//warn the user about the price for the item
+		  alert("price for this item would be = $" + price);
+
+		//adds the custom creation to the cart if the users selects OK to an alert
+        if( confirm('Are you sure that you want to create this item?') ) 
+		{
+			
+			$.ajax(
+			{
+				type: "POST",
+				url: 'http://studentprojects.sis.pitt.edu/fall2016/kgc7/addToCustoms.php',   
+				data: { "name": name, "base": base, "chocType": chocType, "bagSize": bagSize, "price": price },
+				success: function (result) {
+				//alert("holy shit ajaz works");
+			}
+			});
+			$.ajax(
+			{
+				type: "POST",
+				url: 'http://studentprojects.sis.pitt.edu/fall2016/kgc7/addToCartFinal.php',   
+				data: { "name": name, "base":base, "chocType": chocType, "sizeOfBag": bagSize, "price": price, "numOrder": 1 },
+				success: function (result) {
+				alert("Added to cart!");									
+				}
+			});
+			//event.preventDefault stops the page from going to the addToCartFinal.php page.
+			event.preventDefault();
+		}
+		else
+		{
+			event.preventDefault();
+		}
+            
+
+    })
+});
+	</script> 
+	
+<style>
+	body{
+		background-color:#7FDBFF;
+		}
+</style>	
+  </HEAD>
+</BODY>
+<!-- Here is the navbar again. -->
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brandmane for Chocolate Covered Goodness -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Chocolate Covered Goodness!</a>
+    </div>
+
+    <!-- Navbar came from https://getbootstrap.com/components/#navbar -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class = "hoveree"><a href="finalProjectMainPage.html">Main page </a></li>
+        <li class = "hoveree"><a href="finalProjectProductPage.html">Premade Products</a></li>
+		<li class="active hoveree"><a href="customCreation.html">Custom Creation<span class="sr-only">(current)</span></a></li>
+		<li class = "hoveree"><a href="eventCreation.html">Event Recomendations</a></li>
+      </ul>
+      <form class="navbar-form navbar-left">
+        
+      </form>
+      <ul class="nav navbar-nav navbar-right">
+
+		<li> <div id="div1"><h2>Let jQuery AJAX Change This Text</h2></div> </li>
+		<script>
+			$("#div1").load("getSession.php");
+		</script>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+<div class="text-center">
+<h1> Create your own bag of chocolate! </h1> 
+<!-- here is the form  -->
+	<div class = "ayyform lead">
+		<form id = "chocForm" action="addToCustoms.php" method="post" style="font-size: 50;">
+			Name for your creation:<br>
+			<input type="text" name ="name" value="" > <br>
+			What kind of base would you like? <br>
+			<select name="base">
+			  <option value="cherries">cherries</option>
+			  <option value="blueberries">blueberries</option>
+			  <option value="strawberries">strawberries</option>
+			  <option value="bugs">bugs</option> 
+			</select> <br>
+			
+			What type of chocolate do you want? <br>  
+			<input type="radio" name="chocType" value="milk" > milk<br> 
+			<input type="radio" name="chocType" value="white"> white<br>
+			<input type="radio" name="chocType" value="dark"> dark<br>
+			
+			How big do you want your bag(s) to be? <br>  
+			<input type="radio" name="bagSize" value="small" > small<br> 
+			<input type="radio" name="bagSize" value="medium"> medium<br>
+			<input type="radio" name="bagSize" value="large"> large<br>
+			
+			<input type="hidden" value=20 name="price"> 
+			<input type="submit" id = "submit button" class="btn btn-primary btn-lg" value="Submit"> <br>
+		</form>
+	</div>
+</div>
+</BODY>
+</HTML>

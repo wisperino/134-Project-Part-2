@@ -5,44 +5,42 @@ session_start();
 <!DOCTYPE html>
 <html lang="en">
   <head>
-  <!-- For this Assignemnt I decided to use bootstrap for my CSS because it's easy and looks neat
-	Also any text that I include that's commented that's real comments to help you read this are started with
-	a '**' double star.-->
+  <!-- For this Assignemnt I decided to use bootstrap for my CSS because it's easy and looks neat-->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	
-	
+	<style>
+		body{
+		background-color:#7FDBFF;
+		}
+		.hoveree:hover {
+			background: #D050D0;
+		}	
+	</style>
     <title>finalSignIn</title>
   </head>
 <body>
 <nav class="navbar navbar-default">
-	  <div class="container-fluid">
-		<!-- Brandmane for Chocolate Covered Goodness -->
-		<div class="navbar-header">
-		  <a class="navbar-brand" href="#">Chocolate Covered Goodness!</a>
-		</div>
+  <div class="container-fluid">
+    <!-- Brandmane for Chocolate Covered Goodness -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Chocolate Covered Goodness!</a>
+    </div>
 
-		<!-- Navbar came from https://getbootstrap.com/components/#navbar -->
-		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-		  <ul class="nav navbar-nav">
-			<li class="active"><a href="finalProjectMainPage.html">Main page <span class="sr-only">(current)</span></a></li>
-			<li><a href="finalProjectProductPage.php">Premade Products</a></li>
-			<li><a href="customCreation.html">Custom Creation</a></li>
-			<li><a href="eventCreation.html">Event Recomendations</a></li>
-		  </ul>
-		  <form class="navbar-form navbar-left">
-			
-		  </form>
-		  <ul class="nav navbar-nav navbar-right">			
-			<li><a href="finalSignIn.php">Sign in</a></li>
-			<li><a href="cartPageFinal.php">View Cart</a></li>		
-		  </ul>
-		</div><!-- /.navbar-collapse -->
-	  </div><!-- /.container-fluid -->
-	</nav>
-
+    <!-- Navbar came from https://getbootstrap.com/components/#navbar -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class = "hoveree"><a href="finalProjectMainPage.html">Main page </a></li>
+        <li class = "hoveree"><a href="finalProjectProductPage.html">Premade Products</a></li>
+		<li class = "hoveree"><a href="customCreation.html">Custom Creation</a></li>
+		<li class = "hoveree"><a href="eventCreation.html">Event Recomendations</a></li>
+      </ul>
+	
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
 <h1> Sign in here:  </h1>
 	<!-- This checks to see if the form has been submitted, if it hasnt later on it prints the form out -->
     <?php if ($_SERVER['REQUEST_METHOD'] == 'POST'): ?>
@@ -101,6 +99,7 @@ session_start();
 			echo ' <br> welcome back ', $userName1, '<br>';
 			$_SESSION["currentUsername"] = $userName1;
 			$_SESSION["currentUserID"] = $row['userID'];
+			echo '<a href="finalProjectMainPage.html" class="btn btn-default">Click here to go back to the main page.</a>';
 		}
 		
 	?>
@@ -119,7 +118,9 @@ session_start();
 			<button type="submit" class="btn btn-primary">Submit</button>
 		</form>
 	
-	<a href="finalProjectCreateAccount.php" class="btn btn-info">Click here to create an account</a>
+	<a href="finalProjectMainPage.html" class="btn btn-default">Click here to go back to the main page.</a>
+
+	<a href="createAccountPage.php" class="btn btn-default">Click here to create an account</a>
 	</div>	
 	<?php endif; ?>
 	

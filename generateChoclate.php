@@ -2,6 +2,15 @@
 // Start the session
 session_start();
 ?>
+
+<!-- GENERATE CHOCOLATE IS UNUSED 
+Rather it's effects aren't noticed.  I was planning on saving the custom creations to their own database and getting them to be able to quickly get your favorite creations
+but I've run out of time and it woudlnt' be anything new that I havent done already. 
+-->
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -15,9 +24,9 @@ session_start();
 <body>
     
 <h1> This is the addToCustoms page. </h1> 
-	
+
     <?php 
-		$chocID = 0;
+		
 		$itemID= 0;
 		$itemName = $_POST["name"]; 
 		$base = $_POST["base"]; 
@@ -32,7 +41,7 @@ session_start();
 		$dbname = "kgc7";
 		$userID = null;
 		$userID = $_SESSION["currentUserID"];
-		echo '<br> current userID =';
+		
 		echo $userID;
 		$connect = mysqli_connect($host, $user, $password, $dbname);
 		if(mysqli_connect_errno())
@@ -46,19 +55,14 @@ session_start();
 			//echo ' connecgtion successful! <br>';
 		}
 		//**this is where I pull the COUNT from the cart page to see how many values are in, then set the ID to be 1 higher so its unique. 
-		$countQueryActualQuery = "SELECT COUNT(*) AS NumberofColums FROM customChocolate"; 
+		$countQueryActualQuery = "SELECT COUNT(*) AS NumberofColums FROM cart"; 
 		$countQuery = mysqli_query($connect, $countQueryActualQuery);
 		$numCollumsArray = mysqli_fetch_array($countQuery);
-		$chocID = $numCollumsArray[0]+1;
-		
-		//**Query to put in the new item. 
-		// `chocID` INT NOT NULL,
-		  // `name` VARCHAR(45) NULL,
-		  // `chocType` VARCHAR(45) NULL,
-		  // `filling` VARCHAR(45) NULL,
-		  // `sizeOfBag` INT NULL,
-		  // `price` INT NULL,
-			// `users_userID` INT NOT NULL,
+		$itemID = $numCollumsArray[0]+1;
+		$puttingAllValuezIn = "INSERT INTO cart (itemID,itemName,price,numOrder) VALUES (" . $itemID . "," . "'" . $itemName . "'" . "," . "'" .$price. "'" .$numOrder. "'" .")";
+		 
+		 
+
 		if ($userID = null)
 		{
 			echo '<br> userid null <br>';
@@ -72,34 +76,16 @@ session_start();
 		"','" .$base. "','" .$bagSize.	"','" .$price. "','" .$_SESSION["currentUserID"]. "'" .")";
 		
 		}
-		 echo $puttingAllValuezIn;
-		 $result = mysqli_query($connect, $puttingAllValuezIn);
-		 if($result){
-			 echo '<br> puttinitall IN successful databse query <br>';
-		 }else{
-			 echo ("<br> database query failed get out. <br>");
-		 }
-
-		 
-		//add the thing into the cart
-		$countQueryActualQuery = "SELECT COUNT(*) AS NumberofColums FROM cart"; 
-		$countQuery = mysqli_query($connect, $countQueryActualQuery);
-		$numCollumsArray = mysqli_fetch_array($countQuery);
-		$itemID = $numCollumsArray[0]+1;
-		$puttingAllValuezIn = "INSERT INTO cart (itemID,itemName,price,numOrder) VALUES (" . $itemID . "," . "'" . $itemName . "'" . "," . "'" .$price. "'" .$numOrder. "'" .")";
-		 
-		 $result = mysqli_query($connect, $puttingAllValuezIn);
+		
+		$result = mysqli_query($connect, $puttingAllValuezIn);
 		 if($result){
 			 echo 'puttinitall IN CART  successful databse query <br>';
 		 }else{
 			 echo ("database CART query failed get out.");
 		 }
+
+	
 		
-		
-		//**return to previous pages buttons.
-		echo '<a href="cartPage.php" class="btn btn-default">Click here to go to your cart</a>';
-		echo '<a href="createCustom.html" class="btn btn-default">Click here to make another custom creation!</a>';
-		echo '<a href="finalProjectProductPage.php" class="btn btn-default">Click here to go premade product selection</a>';
 
 	?>
 	
